@@ -24,7 +24,6 @@
 #include <linux/sched.h>
 #include <linux/cpumask.h>
 #include <linux/time.h>
-#include <linux/smp_lock.h>
 #include <linux/types.h>
 #include <linux/errno.h>
 #include <linux/miscdevice.h>
@@ -32,7 +31,6 @@
 #include <linux/spinlock.h>
 
 #include <asm/uaccess.h>
-#include <asm/system.h>
 
 #define BACKFIRE_MINOR MISC_DYNAMIC_MINOR
 

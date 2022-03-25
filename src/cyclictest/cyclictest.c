@@ -56,7 +56,7 @@
 
 /* Ugly, but .... */
 #define gettid() syscall(__NR_gettid)
-#define sigev_notify_thread_id _sigev_un._tid
+// #define sigev_notify_thread_id _sigev_un._tid
 
 #ifdef __UCLIBC__
 #define MAKE_PROCESS_CPUCLOCK(pid, clock) \
@@ -1009,9 +1009,9 @@ static void *timerthread(void *param)
 	sigprocmask(SIG_BLOCK, &sigset, NULL);
 
 	if (par->mode == MODE_CYCLIC) {
-		sigev.sigev_notify = SIGEV_THREAD_ID | SIGEV_SIGNAL;
+		sigev.sigev_notify = SIGEV_THREAD | SIGEV_SIGNAL;
 		sigev.sigev_signo = par->signal;
-		sigev.sigev_notify_thread_id = stat->tid;
+		//sigev.sigev_notify_thread_id = stat->tid;
 		timer_create(par->clock, &sigev, &timer);
 		tspec.it_interval = interval;
 	}
@@ -1019,8 +1019,8 @@ static void *timerthread(void *param)
 	memset(&schedp, 0, sizeof(schedp));
 	schedp.sched_priority = par->prio;
 	if (setscheduler(0, par->policy, &schedp))
-		fatal("timerthread%d: failed to set priority to %d\n",
-		      par->cpu, par->prio);
+//		fatal("timerthread%d: failed to set priority to %d\n",
+//		      par->cpu, par->prio);
 
 	if(smi) {
 		par->msr_fd = open_msr_file(par->cpu);
@@ -2195,8 +2195,8 @@ int main(int argc, char **argv)
 
 	process_options(argc, argv, max_cpus);
 
-	if (check_privs())
-		exit(EXIT_FAILURE);
+	// if (check_privs())
+	// 	exit(EXIT_FAILURE);
 
 	if (verbose)
 		printf("Max CPUs = %d\n", max_cpus);

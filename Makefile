@@ -54,7 +54,7 @@ machinetype := $(shell echo $(dumpmachine)| \
 # compile with
 # make NUMA=0
 ifneq ($(filter x86_64 i386 ia64 mips powerpc,$(machinetype)),)
-NUMA 	:= 1
+NUMA 	:= 0
 endif
 
 # The default is to assume that you have numa_parse_cpustring_all
